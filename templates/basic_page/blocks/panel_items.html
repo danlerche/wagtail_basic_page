@@ -1,0 +1,11 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<div class="card">
+<div class="card-header"><h4>{{ value.panel_item_title }}</h4></div>
+<div class="card-body">
+{% if value.panel_link|length > 0 %}<div class="card-img-top mb-1"><a href="{{ value.panel_link }}">{% image value.panel_image fill-340x105 class="img-fluid" %}</a></div>{% endif %}
+{{ value.panel_description }}</div>
+</div>
+
+
+

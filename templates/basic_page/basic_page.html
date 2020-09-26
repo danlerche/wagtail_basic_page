@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailuserbar menu_tags wagtailimages_tags %}
+{% include_block page.body %}
+
+{% block content %}
+
+<div id="page-body" class="row">
+<div class="col">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+{% for post in page.get_children %}
+    {% with post=post.specific %}
+        <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+    {% endwith %}
+{% endfor %}
+
+{% for block in page.body %}
+{% if block.block_type == 'heading' %}
+<h2>{% include_block block %}</h2>
+{% elif block.block_type == 'form' %}
+
+{% include_block block %}
+
+{% elif block.block_type == 'map' %}
+
+{% include_block block %}
+
+{% elif block.block_type == 'show_business_hours' %}
+
+{% include_block block %}
+
+
+{% elif block.block_type == 'bookClub' %}
+
+	{% if forloop.first %}
+	<div id="accordion">
+	{% endif %}
+
+{% include_block block %}
+
+{# book club template is under basic_page/templates/basic_page/blocks/book_club.html #}
+
+{% else %}
+<section class="block-{{ block.block_type }}">
+{% include_block block %}
+</section>
+
+{% endif %}
+{% endfor %}
+
+</div>
+</div>
+</div>
+
+{% endblock %}
